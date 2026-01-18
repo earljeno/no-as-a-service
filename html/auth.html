@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth | No-As-A-Service</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        /* Smooth fade for toggling forms */
+        .fade-in { animation: fadeIn 0.3s ease-in-out; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 antialiased h-screen flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+
+    <div class="sm:mx-auto sm:w-full sm:max-w-md text-center mb-6">
+        <h2 class="text-3xl font-extrabold text-indigo-600 tracking-tight">no-as-a-service<span class="text-gray-900"></span></h2>
+        <p class="mt-2 text-sm text-gray-600">
+            Welcome back, please manage your access below.
+        </p>
+    </div>
+
+    <div class="sm:mx-auto sm:w-full sm:max-w-[400px]">
+        <div class="bg-white py-8 px-4 shadow-xl shadow-gray-200/50 sm:rounded-xl sm:px-10 border border-gray-100">
+
+            <div id="login-form" class="fade-in block">
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-900">Sign in</h3>
+                    <p class="text-sm text-gray-500">Access your dashboard</p>
+                </div>
+                
+                <form class="space-y-5" id="loginForm">
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email address</label>
+                        <div class="mt-1">
+                            <input id="email" name="email" type="email" autocomplete="email" required class="appearance-none block w-full px-3 py-2.5 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-200">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex items-center justify-between">
+                            <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+                            <div class="text-sm">
+                                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500 transition-colors">Forgot password?</a>
+                            </div>
+                        </div>
+                        <div class="mt-1">
+                            <input id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none block w-full px-3 py-2.5 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-200">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all transform active:scale-95">
+                            Sign in
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-200"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-gray-500">New here?</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <button onclick="toggleAuth('register')" class="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
+                            Create a new account &rarr;
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="register-form" class="fade-in hidden">
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-900">Create account</h3>
+                    <p class="text-sm text-gray-500">Start your free trial today</p>
+                </div>
+                
+                <form class="space-y-5" id="registerForm">
+                    <div>
+                        <label for="reg-email" class="block text-sm font-medium text-gray-700">Email address</label>
+                        <div class="mt-1">
+                            <input id="reg-email" name="email" type="email" autocomplete="email" required class="appearance-none block w-full px-3 py-2.5 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-200" placeholder="you@example.com">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="reg-password" class="block text-sm font-medium text-gray-700">Password</label>
+                        <div class="mt-1">
+                            <input id="reg-password" name="password" type="password" required class="appearance-none block w-full px-3 py-2.5 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-200" placeholder="Create a password">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="confirm-password" class="block text-sm font-medium text-gray-700">Confirm Password</label>
+                        <div class="mt-1">
+                            <input id="confirm-password" name="confirm-password" type="password" required class="appearance-none block w-full px-3 py-2.5 border border-gray-300 rounded-lg placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm transition duration-200" placeholder="Confirm password">
+                        </div>
+                    </div>
+
+                    <div>
+                        <button type="submit" class="w-full flex justify-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 transition-all transform active:scale-95">
+                            Create Account
+                        </button>
+                    </div>
+                </form>
+
+                <div class="mt-6">
+                    <div class="relative">
+                        <div class="absolute inset-0 flex items-center">
+                            <div class="w-full border-t border-gray-200"></div>
+                        </div>
+                        <div class="relative flex justify-center text-sm">
+                            <span class="px-2 bg-white text-gray-500">Already have an account?</span>
+                        </div>
+                    </div>
+
+                    <div class="mt-6 text-center">
+                        <button onclick="toggleAuth('login')" class="text-sm font-medium text-indigo-600 hover:text-indigo-500 transition-colors">
+                            &larr; Back to Sign in
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleAuth(view) {
+            const loginF = document.getElementById('login-form');
+            const regF = document.getElementById('register-form');
+
+            if (view === 'register') {
+                loginF.classList.add('hidden');
+                regF.classList.remove('hidden');
+            } else {
+                regF.classList.add('hidden');
+                loginF.classList.remove('hidden');
+            }
+        }
+    </script>
+    
+    <script type="module" src="/static/auth-ui.js"></script>
+</body>
+</html>
