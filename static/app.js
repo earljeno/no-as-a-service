@@ -1,6 +1,13 @@
 import { db, getCurrentUser, onAuthChange } from "./firebase.js";
 import { collection, query, where, getDocs, deleteDoc, addDoc, orderBy, doc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
+// Only redirect if no user is logged in
+onAuthChange(async user => {
+    if (!user) return window.location.href = "auth.html";
+    await loadHistory();
+    await renderHistory();
+});
+
 document.addEventListener("DOMContentLoaded", () => {
     const generateBtn = document.getElementById('generate-btn');
     const btnSpinner = document.getElementById('btn-spinner');
