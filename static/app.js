@@ -1,7 +1,6 @@
 import { db, getCurrentUser, onAuthChange } from "./firebase.js";
 import { collection, query, where, getDocs, deleteDoc, addDoc, orderBy, doc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
-// Only redirect if no user is logged in
 onAuthChange(async user => {
     if (!user) return window.location.href = "auth.html";
     await loadHistory();
@@ -23,14 +22,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let historyLog = [];
     window.handleCopy = handleCopy;
 
-    // Only redirect if no user is logged in
-    onAuthChange(async user => {
-        if (!user) return window.location.href = "auth.html";
-        await loadHistory();
-        await renderHistory();
-    });
-
-    // Generate button click
     generateBtn.addEventListener("click", handleDecline);
 
     async function handleDecline() {
@@ -71,14 +62,12 @@ document.addEventListener("DOMContentLoaded", () => {
         const user = getCurrentUser();
         if (!user) return;
 
-        // Save to Firestore
         await addDoc(collection(db, "systemLogs"), {
             user: user.uid,
             generated: text,
             timestamp: Date.now()
         });
 
-        // Add locally
         historyLog.unshift({ text, timestamp: Date.now() });
         renderHistory();
         historyCount.innerText = historyLog.length;
@@ -114,7 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
         historyCount.innerText = historyLog.length;
         historyCount.classList.remove('hidden');
 
-        // Clear old items
         historyList.querySelectorAll('li:not(#empty-history)').forEach(li => li.remove());
 
         historyLog.forEach(entry => {
