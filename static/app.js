@@ -1,12 +1,6 @@
 import { db, getCurrentUser, onAuthChange } from "./firebase.js";
 import { collection, query, where, getDocs, deleteDoc, addDoc, orderBy, doc } from "https://www.gstatic.com/firebasejs/10.5.0/firebase-firestore.js";
 
-onAuthChange(async user => {
-    if (!user) return window.location.href = "auth.html";
-    await loadHistory();
-    await renderHistory();
-});
-
 document.addEventListener("DOMContentLoaded", () => {
     const generateBtn = document.getElementById('generate-btn');
     const btnSpinner = document.getElementById('btn-spinner');
@@ -18,6 +12,12 @@ document.addEventListener("DOMContentLoaded", () => {
     const emptyHistory = document.getElementById('empty-history');
     const historyCount = document.getElementById('history-count');
     const toast = document.getElementById('toast');
+
+    onAuthChange(async user => {
+        if (!user) return window.location.href = "auth.html";
+        await loadHistory();
+        await renderHistory();
+    });
 
     let historyLog = [];
     window.handleCopy = handleCopy;
